@@ -1,0 +1,7 @@
+<tr data-movie-id="{{ movie.id }}" data-movie-year="{{ movie.year }}" data-movie-genre="{{ movie.genre }}" data-movie-director="{{ movie.director }}" data-movie-title="{{ movie.title }}">
+	<td><span class="title">{{ movie.title }}</span></td>
+	<td>{{ movie.year }}</td>
+	<td>{{ movie.genre}}</td>
+	<td>{{ movie.director|default:"Unknown" }}</td>
+	<td><button class="delete btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete"><span class="glyphicon glyphicon-remove"></span> Delete</button><button class="delete btn btn-sm btn-default restore"><span class="glyphicon glyphicon-repeat"></span> Restore</button></td>
+</tr>

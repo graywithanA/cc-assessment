@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+	<title>Acme Movie Database Project Brief</title>
+	{% load static %}
+<head>
+
+	<link rel="stylesheet" type"text/css" href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}">
+	<link rel="stylesheet" type"text/css" href="{% static "css/base_docs.css" %}">
+	<script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+	<script src="{% static "vendor/jquery-ui/jquery-ui.min.js" %}"></script>
+	<script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+
+</head>
+<body class="docs">
+    <div class="container">
+
+        <h1>Project Brief</h1>
+        <h2>Acme Company Website Modifications</h2>
+
+        Jump: <a href="#comps">Annotated Design Comps</a> | <a href="#technical-requirements">Technical Requirements</a> | <a href="#api">API specification</a>
+
+        <section id="comps" name="comps">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2>Annotated Design Comps</h2>
+                    <hr/>
+                    <p>Click to view larger.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="{% static "img/project_brief/base_view.png" %}" target="_blank"><img src="{% static "img/project_brief/base_view.png" %}" class="img-thumbnail"/></a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="{% static "img/project_brief/delete_confirmation_modal.png" %}" target="_blank"><img src="{% static "img/project_brief/delete_confirmation_modal.png" %}" class="img-thumbnail"/></a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="{% static "img/project_brief/restore.png" %}" target="_blank"><img src="{% static "img/project_brief/restore.png" %}" class="img-thumbnail"/></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="technical-requirements" name="technical-requirements">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2>Technical Requirements</h2>
+                    <h3>General Requirement</h3>
+                    <h4><strong><span class="glyphicon glyphicon-warning-sign"></span> JavaScript should be written in an object-oriented fashion.  A basic object is already provided in main.js and you must follow the existing constructor design pattern for your solution.</strong></h4>
+
+                    <hr/>
+
+                    <h3>Movie object format</h3>
+                    <pre>
+{
+    "id": 123,
+    "title": "Killer Klowns from Outer Space",
+    "year": 1988,
+    "genre": "Romantic Comedy",
+    "director": "Stephen Chiodo"
+}
+                    </pre>
+
+                    <h3>Delete Feature</h3>
+
+                    <p>Please add a delete feature as indicated in the design comps.</p>
+
+                    <p>The delete feature should adhere to the following flow:</p>
+
+                    <ol>
+                        <li>User clicks "Delete" button present in each table row per movie.  This button must have an attribute: <code>data-role="delete"</code></li>
+                        <li>When the delete button is clicked, a confirmation modal is displayed, with movie title and a confirmation button. This button must have an attribute: <code>data-role="confirm-delete"</code></li>
+                        <li>User clicks "Yes, delete this movie" confirmation button.</li>
+                        <li>
+                            Application calls the provided API end-point to delete the associated movie entry.
+                            <ul>
+                                <li><strong>Important:</strong> the javascript application <em>must</em> use an object method called <code>_deleteRecord</code>.  This method must accept a single parameter, which is an object-literal representing the movie to be deleted, and use this object to perform the API call.  See "Movie object format" above.
+                            </ul>
+                        </li>
+                        <li>Application dismisses modal.</li>
+                        <li>Application updates movie table row with CSS class "deleted".  Style as indicated in design comps.</li>
+                        <li>Application hides or removes a "Delete" button, and shows or inserts a "Restore" button.
+                    </ol>
+
+                    <h3>Restore Feature</h3>
+
+                    <p>Please add a restore feature, which allows the user to "undo" a movie deletion, as indicated in the design comps.</p>
+
+                    <p>This feature does not need to persist through page-reloads.</p>
+
+                    <p>You are free to implement this feature in the best way you can, with the following requirements:</p>
+
+                    <ol>
+                        <li>The "Restore" button must have an attribute: <code>data-role="restore"</code>
+                        <li><strong>Important</strong>: This feature <em>must</em> use an object variable (array) called <code>_deleted_history</code>.  This array must be used to store deleted movie objects (see "Movie object format" above), which are then used in the "Restore" functionality.</li>
+                        <li>The "Restore" functionality should use the existing <code>_addRecord</code> object method to add movies back to the database.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        <section id="api" name="api">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2>API Specification</h2>
+                    <hr/>
+                    <h3>/api/_add</h3>
+                    <hr/>
+
+                    <h4>Add a movie record to the database.</h4>
+
+                    <h5>Example request form data (x-www-form-urlencoded):</h5>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>title</td>
+                                <td>First Blood</td>
+                            </tr>
+                            <tr>
+                                <td>year</td>
+                                <td>1982</td>
+                            </tr>
+                            <tr>
+                                <td>genre</td>
+                                <td>Action</td>
+                            </tr>
+                            <tr>
+                                <td>director</td>
+                                <td>Ted Kotcheff</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                    <h5>Example response (json):</h5>
+                    <pre>
+{
+    "result": "200",
+    "new_movie": {
+        "id": 123
+        "title": "Killer Klowns from Outer Space",
+        "year": 1988,
+        "genre": "Romantic Comedy",
+        "director": "Stephen Chiodo"
+    }
+}
+                    </pre>
+
+                    <h3>/api/_delete/&lt;movie_id&gt;</h3>
+                    <hr/>
+
+                    <h4>Delete a movie record to the database.</h4>
+
+                    <h5>Example response (json):</h5>
+                    <pre>
+{
+    "result": "ok",
+    "id": "4"
+}
+                    </pre>
+                </div>
+            </div>
+
+        </section>
+
+
+    </div>
+
+</body>
+</html>

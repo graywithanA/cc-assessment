@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block body %}
+<body>
+  <div class="main">
+		<h1>Acme Company Movie Database</h1>
+		<h2>Add a Movie <span class="status"></span></h2>
+		<form class="add-movie form-horizontal" onsubmit="return false;">
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label class="control-label col-md-4">Title:</label>
+					<div class="col-md-8">
+						<input id="id-title" class="form-control" type="text" size="30" name="title" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label class="control-label col-md-4">Release Year:</label>
+					<div class="col-md-8">
+						<input id="id-year" class="form-control" type="text" size="30" name="year" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label class="control-label col-md-4">Genre:</label>
+					<div class="col-md-8">
+						<input id="id-genre" class="form-control" type="text" size="30" name="genre">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label class="control-label col-md-4">Director:</label>
+					<div class="col-md-8">
+						<input id="id-director" class="form-control" type="text" size="30" name="director">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<div class="col-md-8 col-md-offset-4">
+						<button class="btn btn-sm btn-default add" data-role="add"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<h2>All Movies</h2>
+		<div class="no-movies"><em>No movies yet... please, add some!</em></div>
+		<table class="movies table table-striped table-bordered">
+			<thead>
+				<tr >
+					<th class="col-md-3">Title</th>
+					<th class="col-md-2">Release Year</th>
+					<th class="col-md-2">Genre</th>
+					<th class="col-md-3">Director</th>
+					<th class="col-md-2">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for movie in movies %}
+					<tr data-id="{{ movie.id }}" data-year="{{ movie.year }}" data-genre="{{ movie.genre }}" data-director="{{ movie.director }}" data-title="{{ movie.title }}">
+						<td><span class="title">{{ movie.title }}</span></td>
+						<td><span class="year">{{ movie.year }}</span></td>
+						<td><span class="genre">{{ movie.genre}}</span></td>
+						<td><span class="director">{{ movie.director }}</span></td>
+						<td id="delete-restore">
+							<button class="delete btn btn-danger" data-role="delete" data-toggle="modal" data-target="#deleteModal" data-id="{{ movie.id }}" data-year="{{ movie.year }}" data-genre="{{ movie.genre }}" data-director="{{ movie.director }}" data-title="{{ movie.title }}"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+							<button class="btn btn-default restore hidden" data-role="restore" data-id="{{ movie.id }}"><span class="glyphicon glyphicon-repeat"></span> Restore</button></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h3 class="modal-title" id="confirm-delete-title">You are about to delete a movie!</h3>
+		      </div>
+		      <div class="modal-body">
+		        <h5>You are about to delete:</h5>
+		        <h4 id="delete-title"></h4>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-danger" id="confirm-delete" data-role="confirm-delete">Yes, delete this movie</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+	</div>
+</body>
+{% endblock %}
